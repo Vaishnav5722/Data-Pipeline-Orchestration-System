@@ -1,0 +1,36 @@
+version: '3'
+
+
+services:
+postgres:
+image: postgres:13
+environment:
+POSTGRES_USER: airflow
+POSTGRES_PASSWORD: airflow
+POSTGRES_DB: airflow
+
+
+airflow-webserver:
+image: apache/airflow:2.8.1
+depends_on:
+- postgres
+environment:
+AIRFLOW__CORE__EXECUTOR: LocalExecutor
+AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+AIRFLOW__EMAIL__EMAIL_BACKEND: airflow.utils.email.send_email_smtp
+volumes:
+- ./dags:/opt/airflow/dags
+- ./scripts:/opt/airflow/scripts
+ports:
+- "8080:8080"
+command: webserver
+
+
+airflow-scheduler:
+image: apache/airflow:2.8.1
+depends_on:
+- airflow-webserver
+volumes:
+- ./dags:/opt/airflow/dags
+- ./scripts:/opt/airflow/scripts
+command: scheduler

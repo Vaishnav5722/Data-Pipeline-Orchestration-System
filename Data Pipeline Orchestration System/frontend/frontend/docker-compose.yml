@@ -1,0 +1,12 @@
+version: '3'
+services:
+backend:
+build: ./backend
+ports:
+- "8000:8000"
+
+
+airflow-webserver:
+image: apache/airflow:2.8.1
+ports:
+- "8080:8080"

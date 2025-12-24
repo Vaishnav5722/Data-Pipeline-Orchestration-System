@@ -1,0 +1,16 @@
+airflow-data-pipeline/
+│
+├── dags/
+│ └── etl_pipeline.py
+│
+├── scripts/
+│ ├── extract.py
+│ ├── transform.py
+│ ├── load.py
+│ └── data_quality.py
+│
+├── docker-compose.yml
+├── Dockerfile
+├── requirements.txt
+├── README.md
+└── .env
